@@ -1,4 +1,4 @@
-
+subdir-ccflags-y += -Os
 #bcm4330
 
 #DHDCFLAGS = -DLINUX -DBCMDRIVER -DBCMDONGLEHOST -DDHDTHREAD -DBCMWPA2         \
