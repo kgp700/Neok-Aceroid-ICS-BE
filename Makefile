@@ -1,6 +1,6 @@
 VERSION = 3
 PATCHLEVEL = 0
-SUBLEVEL = 41
+SUBLEVEL = 43
 EXTRAVERSION =
 NAME = Sneaky Weasel
 
@@ -194,9 +194,8 @@ SUBARCH := arm
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
 SUBARCH := arm
 export KBUILD_BUILDHOST := $(SUBARCH)
-ARCH		?= $(SUBARCH)
-CROSS_COMPILE	?= arm-eabi-
-CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
+ARCH		?= arm
+CROSS_COMPILE	?= /root/1test/toolchain/arm-eabi-4.5.4-201110/bin/arm-eabi-
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -357,8 +356,8 @@ CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 CFLAGS_MODULE   =
 AFLAGS_MODULE   =
 LDFLAGS_MODULE  =
-CFLAGS_KERNEL	=
-AFLAGS_KERNEL	=
+CFLAGS_KERNEL	= -mtune=cortex-a8 -march=armv7-a -mfpu=neon -ftree-vectorize -fno-gcse -fsingle-precision-constant -funswitch-loops -fprofile-correction -funsafe-math-optimizations -fipa-cp-clone -fgraphite-identity -floop-interchange -floop-strip-mine -floop-block -pipe
+AFLAGS_KERNEL	= -mtune=cortex-a8 -march=armv7-a -mfpu=neon -ftree-vectorize -fno-gcse -fsingle-precision-constant -funswitch-loops -fprofile-correction -funsafe-math-optimizations -fipa-cp-clone -fgraphite-identity -floop-interchange -floop-strip-mine -floop-block -pipe
 CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
 
@@ -375,7 +374,12 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
-		   -fno-delete-null-pointer-checks
+		   -fno-delete-null-pointer-checks \
+		   -mtune=cortex-a8 -march=armv7-a -mfpu=neon -mfloat-abi=hard \
+		   -fno-gcse -ftree-vectorize -fsingle-precision-constant -funswitch-loops \
+		   -fprofile-correction -funsafe-math-optimizations -fipa-cp-clone \
+		   -fgraphite-identity -floop-interchange -floop-strip-mine -floop-block \
+		   -pipe -mthumb
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
